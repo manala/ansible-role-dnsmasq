@@ -1,0 +1,28 @@
+---
+
+- name: install > Darwin Packages
+  homebrew:
+    #update_homebrew: yes
+    name:  "{{ item }}"
+    install_options: with-dnssec
+    state: present
+  with_items:
+     - dnsmasq
+
+# create a directory if it doesn't exist
+- name: install > Ensure configuration directory exist
+  file:
+    path: "{{ manala_dnsmasq_configs_dir }}"
+    state: directory
+    mode: 0755
+
+# Startup script
+- name: install > Copy start-up script
+  become: true
+  template:
+    src:  templates/initd/io.manala.dnsmasq.plist.j2
+    dest: /Library/LaunchDaemons/io.manala.dnsmasq.plist
+
+- name: "install > Loading into launchctl"
+  become: true
+  command: launchctl load /Library/LaunchDaemons/io.manala.dnsmasq.plist
