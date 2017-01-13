@@ -1,4 +1,4 @@
-# Ansible Role: Dnsmasq
+# Ansible Role: Dnsmasq [![Build Status](https://travis-ci.org/manala/ansible-role-dnsmasq.svg?branch=master)](https://travis-ci.org/manala/ansible-role-dnsmasq)
 
 This role will deal with the setup of __dnsmasq__.
 
@@ -40,12 +40,24 @@ Using ansible galaxy requirements file:
 |----|-------|----|-----------|
 |manala_dnsmasq_configs|[]|Array|Configs
 
-### Configuration example
+### Configuration example (Default)
 
 ```yaml
 manala_dnsmasq_configs:
   - file:     dev.conf
     template: configs/default.dev.j2
+```
+
+### Configuration example (Custom)
+
+```yaml
+manala_dnsmasq_configs:
+  - file:     dev.conf
+    template: configs/default.dev.j2
+    config:
+      - user: root
+      - no-resolv
+      - local-ttl: 5
 ```
 
 ## Example playbook

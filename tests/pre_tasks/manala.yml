@@ -1,0 +1,8 @@
+---
+
+- name: Pre tasks > Manala apt dnsmasq preferences
+  apt:
+    package: dnsmasq*
+    state:   absent
+    purge:   true
+  ignore_errors: true
